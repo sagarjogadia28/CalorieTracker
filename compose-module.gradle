@@ -1,0 +1,64 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-parcelize'
+apply plugin: 'org.jetbrains.kotlin.plugin.compose'
+android {
+    compileSdk ProjectConfig.compileSdk
+
+    defaultConfig {
+        minSdk ProjectConfig.minSdk
+        targetSdk ProjectConfig.targetSdk
+        versionCode ProjectConfig.versionCode
+        versionName ProjectConfig.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion "${libs.versions.compiler}"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        coreLibraryDesugaringEnabled true
+
+        sourceCompatibility JavaVersion.VERSION_18
+        targetCompatibility JavaVersion.VERSION_18
+    }
+    kotlinOptions {
+        jvmTarget = '18'
+    }
+}
+
+dependencies {
+    implementation libs.androidx.compiler
+    implementation libs.androidx.ui
+    implementation libs.androidx.ui.tooling.preview
+    implementation libs.androidx.hilt.navigation.compose
+    implementation libs.androidx.material3
+    implementation libs.androidx.runtime
+    implementation libs.androidx.navigation.compose
+    implementation libs.androidx.lifecycle.viewmodel.compose
+    implementation libs.androidx.activity.compose
+
+    coreLibraryDesugaring libs.android.desugaring
+
+    kapt libs.hilt.android.compiler
+    implementation libs.hilt.android
+    implementation libs.androidx.hilt.navigation.compose
+
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.ui.test.junit4)
+//    debugImplementation(libs.androidx.ui.test.manifest)
+}
