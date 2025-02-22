@@ -15,17 +15,22 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.sagarjogadia28.core.R
+import com.sagarjogadia28.core.navigation.Route
+import com.sagarjogadia28.core.util.UiEvent
 import com.sagarjogadia28.core_ui.LocalSpacing
 import com.sagarjogadia28.core_ui.ui.theme.CalorieTrackerTheme
 import com.sagarjogadia28.onboarding_presentation.components.ActionButton
 
 @Composable
 fun WelcomeScreen(
+    onNavigate: (UiEvent.Navigate) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val spacing = LocalSpacing.current
     Column(
-        modifier = modifier.fillMaxSize().padding(spacing.spaceMedium),
+        modifier = modifier
+            .fillMaxSize()
+            .padding(spacing.spaceMedium),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -37,7 +42,9 @@ fun WelcomeScreen(
         Spacer(modifier = Modifier.height(spacing.spaceMedium))
         ActionButton(
             text = R.string.next,
-            onClick = {}
+            onClick = {
+                onNavigate(UiEvent.Navigate(Route.Age))
+            }
         )
     }
 }
@@ -46,6 +53,8 @@ fun WelcomeScreen(
 @Composable
 private fun WelcomeScreenPreview() {
     CalorieTrackerTheme {
-        WelcomeScreen()
+        WelcomeScreen(
+            onNavigate = {}
+        )
     }
 }

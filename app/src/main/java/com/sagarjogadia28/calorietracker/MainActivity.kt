@@ -7,10 +7,11 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.sagarjogadia28.core.navigation.Route
 import com.sagarjogadia28.core_ui.ui.theme.CalorieTrackerTheme
 import com.sagarjogadia28.onboarding_presentation.welcome.WelcomeScreen
 
@@ -21,7 +22,48 @@ class MainActivity : ComponentActivity() {
         setContent {
             CalorieTrackerTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    WelcomeScreen()
+                    val navController = rememberNavController()
+                    NavHost(
+                        navController = navController,
+                        startDestination = Route.Welcome,
+                        modifier = Modifier.padding(innerPadding)
+                    ) {
+                        composable<Route.Welcome> {
+                            WelcomeScreen(
+                                onNavigate = { event ->
+                                    navController.navigate(event.route)
+                                }
+                            )
+                        }
+
+                        composable<Route.Age> {
+
+                        }
+                        composable<Route.Gender> {
+
+                        }
+                        composable<Route.Height> {
+
+                        }
+                        composable<Route.Weight> {
+
+                        }
+                        composable<Route.NutrientGoal> {
+
+                        }
+                        composable<Route.Activity> {
+
+                        }
+                        composable<Route.Goal> {
+
+                        }
+                        composable<Route.TrackerOverview> {
+
+                        }
+                        composable<Route.Search> {
+
+                        }
+                    }
                 }
             }
         }
