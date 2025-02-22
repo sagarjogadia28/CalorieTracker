@@ -93,6 +93,7 @@ dependencies {
 
     //Modules
     implementation(project(Modules.core))
+    implementation(project(Modules.core_ui))
     implementation(project(Modules.onboardingPresentation))
     implementation(project(Modules.onboardingDomain))
     implementation(project(Modules.trackerPresentation))
