@@ -3,7 +3,6 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.kapt)
-    alias(libs.plugins.hilt.android)
 }
 
 android {
@@ -83,10 +82,14 @@ dependencies {
     //Moshi
     kapt(libs.moshi.kotlin.codegen)
 
-    //Dagger-Hilt
-    implementation(libs.hilt.android)
-    implementation(libs.androidx.hilt.navigation.compose)
-    kapt(libs.hilt.android.compiler)
+    //Koin
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.navigation)
+    implementation(libs.koin.androidx.compose)
+
+    //DataStore
+    implementation(libs.androidx.datastore)
 
     //Coil
     implementation(libs.coil.compose)
