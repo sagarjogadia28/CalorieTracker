@@ -7,12 +7,16 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sagarjogadia28.core.navigation.Route
 import com.sagarjogadia28.core_ui.ui.theme.CalorieTrackerTheme
+import com.sagarjogadia28.onboarding_presentation.age.AgeScreen
 import com.sagarjogadia28.onboarding_presentation.gender.GenderScreen
 import com.sagarjogadia28.onboarding_presentation.welcome.WelcomeScreen
 
@@ -22,8 +26,13 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             CalorieTrackerTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    val navController = rememberNavController()
+                val navController = rememberNavController()
+                val snackBarHostState = remember { SnackbarHostState() }
+
+                Scaffold(
+                    snackbarHost = { SnackbarHost(snackBarHostState) },
+                    modifier = Modifier.fillMaxSize()
+                ) { innerPadding ->
                     NavHost(
                         navController = navController,
                         startDestination = Route.Welcome,
@@ -44,7 +53,12 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                         composable<Route.Age> {
-
+                            AgeScreen(
+                                snackBarHostState = snackBarHostState,
+                                onNavigate = { event ->
+                                    navController.navigate(event.route)
+                                }
+                            )
                         }
                         composable<Route.Height> {
 
