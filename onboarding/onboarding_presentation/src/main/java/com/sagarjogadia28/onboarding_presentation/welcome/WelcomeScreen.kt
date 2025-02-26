@@ -43,7 +43,7 @@ fun WelcomeScreen(
         ActionButton(
             text = R.string.next,
             onClick = {
-                onNavigate(UiEvent.Navigate(Route.Age))
+                onNavigate(UiEvent.Navigate(Route.Gender))
             }
         )
     }

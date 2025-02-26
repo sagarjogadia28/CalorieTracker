@@ -13,6 +13,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sagarjogadia28.core.navigation.Route
 import com.sagarjogadia28.core_ui.ui.theme.CalorieTrackerTheme
+import com.sagarjogadia28.onboarding_presentation.gender.GenderScreen
 import com.sagarjogadia28.onboarding_presentation.welcome.WelcomeScreen
 
 class MainActivity : ComponentActivity() {
@@ -35,11 +36,14 @@ class MainActivity : ComponentActivity() {
                                 }
                             )
                         }
-
-                        composable<Route.Age> {
-
-                        }
                         composable<Route.Gender> {
+                            GenderScreen(
+                                onNavigate = { event ->
+                                    navController.navigate(event.route)
+                                }
+                            )
+                        }
+                        composable<Route.Age> {
 
                         }
                         composable<Route.Height> {
