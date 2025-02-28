@@ -15,13 +15,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.sagarjogadia28.core.R
-import com.sagarjogadia28.core.usecase.FilterOutDigitsUseCase
 import com.sagarjogadia28.core.util.UiEvent
 import com.sagarjogadia28.core_ui.LocalSpacing
 import com.sagarjogadia28.core_ui.ui.theme.CalorieTrackerTheme
 import com.sagarjogadia28.onboarding_presentation.components.ActionButton
 import com.sagarjogadia28.onboarding_presentation.components.UnitTextField
-import com.sagarjogadia28.onboarding_presentation.mock.FakePreferences
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.koinViewModel
 
@@ -32,7 +30,6 @@ fun AgeScreen(
     modifier: Modifier = Modifier,
     viewModel: AgeViewModel = koinViewModel()
 ) {
-    val spacing = LocalSpacing.current
     val context = LocalContext.current
 
     LaunchedEffect(Unit) {
@@ -53,6 +50,23 @@ fun AgeScreen(
         }
     }
 
+    AgeScreen(
+        age = viewModel.age,
+        onAgeUpdated = viewModel::onAgeUpdated,
+        onClick = viewModel::saveAge,
+        modifier = modifier
+    )
+
+}
+
+@Composable
+fun AgeScreen(
+    age: String,
+    onAgeUpdated: (String) -> Unit,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val spacing = LocalSpacing.current
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -67,14 +81,14 @@ fun AgeScreen(
                 style = MaterialTheme.typography.displaySmall
             )
             UnitTextField(
-                value = viewModel.age,
-                onValueChange = viewModel::onAgeUpdated,
+                value = age,
+                onValueChange = onAgeUpdated,
                 unit = stringResource(R.string.years)
             )
         }
         ActionButton(
             text = R.string.next,
-            onClick = viewModel::saveAge,
+            onClick = onClick,
             modifier = Modifier.align(Alignment.BottomEnd)
         )
     }
@@ -86,9 +100,9 @@ fun AgeScreen(
 private fun AgeScreenPreview() {
     CalorieTrackerTheme {
         AgeScreen(
-            snackBarHostState = SnackbarHostState(),
-            onNavigate = {},
-            viewModel = AgeViewModel(FakePreferences(), FilterOutDigitsUseCase())
+            age = "23",
+            onAgeUpdated = {},
+            onClick = {},
         )
     }
 }

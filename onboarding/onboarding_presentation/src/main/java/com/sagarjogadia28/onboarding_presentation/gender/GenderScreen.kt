@@ -25,7 +25,6 @@ import com.sagarjogadia28.core_ui.LocalSpacing
 import com.sagarjogadia28.core_ui.ui.theme.CalorieTrackerTheme
 import com.sagarjogadia28.onboarding_presentation.components.ActionButton
 import com.sagarjogadia28.onboarding_presentation.components.SelectableButton
-import com.sagarjogadia28.onboarding_presentation.mock.FakePreferences
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.koinViewModel
 
@@ -35,7 +34,6 @@ fun GenderScreen(
     modifier: Modifier = Modifier,
     viewModel: GenderViewModel = koinViewModel()
 ) {
-    val spacing = LocalSpacing.current
     LaunchedEffect(Unit) {
         viewModel.uiChannel.collectLatest { event ->
             when (event) {
@@ -48,6 +46,22 @@ fun GenderScreen(
         }
     }
 
+    GenderScreen(
+        selectedGender = viewModel.gender,
+        onGenderSelected = viewModel::onGenderSelected,
+        onClick = viewModel::saveGender,
+        modifier = modifier
+    )
+}
+
+@Composable
+fun GenderScreen(
+    selectedGender: Gender,
+    onGenderSelected: (Gender) -> Unit,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val spacing = LocalSpacing.current
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -67,8 +81,8 @@ fun GenderScreen(
                 Gender.entries.map { gender ->
                     SelectableButton(
                         text = if (gender == Gender.MALE) R.string.male else R.string.female,
-                        onClick = { viewModel.onGenderSelected(gender) },
-                        isSelected = viewModel.gender == gender,
+                        onClick = { onGenderSelected(gender) },
+                        isSelected = selectedGender == gender,
                         color = MaterialTheme.colorScheme.primary,
                         selectedTextColor = Color.White,
                         textStyle = MaterialTheme.typography.labelLarge.copy(
@@ -80,7 +94,7 @@ fun GenderScreen(
         }
         ActionButton(
             text = R.string.next,
-            onClick = viewModel::saveGender,
+            onClick = onClick,
             modifier = Modifier.align(Alignment.BottomEnd)
         )
     }
@@ -91,8 +105,9 @@ fun GenderScreen(
 private fun GenderScreenPreview() {
     CalorieTrackerTheme {
         GenderScreen(
-            onNavigate = {},
-            viewModel = GenderViewModel(FakePreferences())
+            selectedGender = Gender.FEMALE,
+            onGenderSelected = {},
+            onClick = {},
         )
     }
 }
