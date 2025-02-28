@@ -1,0 +1,104 @@
+package com.sagarjogadia28.onboarding_presentation.height
+
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import com.sagarjogadia28.core.R
+import com.sagarjogadia28.core.util.UiEvent
+import com.sagarjogadia28.core_ui.LocalSpacing
+import com.sagarjogadia28.core_ui.ui.theme.CalorieTrackerTheme
+import com.sagarjogadia28.onboarding_presentation.age.AgeScreen
+import com.sagarjogadia28.onboarding_presentation.components.ActionButton
+import com.sagarjogadia28.onboarding_presentation.components.UnitTextField
+import org.koin.androidx.compose.koinViewModel
+
+@Composable
+fun HeightScreen(
+    snackBarHostState: SnackbarHostState,
+    onNavigate: (UiEvent.Navigate) -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: HeightViewModel = koinViewModel()
+) {
+    val context = LocalContext.current
+    LaunchedEffect(Unit) {
+        viewModel.uiChannel.collect { event ->
+            when (event) {
+                is UiEvent.Navigate -> {
+                    onNavigate(event)
+                }
+
+                is UiEvent.ShowSnackBar -> {
+                    snackBarHostState.showSnackbar(event.message.asString(context))
+                }
+
+                else -> {}
+            }
+        }
+    }
+
+    HeightScreen(
+        height = viewModel.height,
+        onHeightUpdated = viewModel::updateHeight,
+        onClick = viewModel::saveHeight,
+        modifier = modifier
+    )
+}
+
+@Composable
+fun HeightScreen(
+    height: String,
+    onHeightUpdated: (String) -> Unit,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val spacing = LocalSpacing.current
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(spacing.spaceLarge),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = stringResource(R.string.whats_your_height),
+                style = MaterialTheme.typography.displaySmall
+            )
+            UnitTextField(
+                value = height,
+                onValueChange = onHeightUpdated,
+                unit = stringResource(R.string.cm)
+            )
+        }
+        ActionButton(
+            text = R.string.next,
+            onClick = onClick,
+            modifier = Modifier.align(Alignment.BottomEnd)
+        )
+    }
+
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+private fun HeightScreenPreview() {
+    CalorieTrackerTheme {
+        HeightScreen(
+            height = "172",
+            onHeightUpdated = {},
+            onClick = {},
+        )
+    }
+}

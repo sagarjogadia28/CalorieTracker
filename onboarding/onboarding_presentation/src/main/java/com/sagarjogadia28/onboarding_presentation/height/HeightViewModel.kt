@@ -1,0 +1,44 @@
+package com.sagarjogadia28.onboarding_presentation.height
+
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.sagarjogadia28.core.R
+import com.sagarjogadia28.core.domain.preferences.UserInfoPreferences
+import com.sagarjogadia28.core.navigation.Route
+import com.sagarjogadia28.core.usecase.FilterOutDigitsUseCase
+import com.sagarjogadia28.core.util.UiEvent
+import com.sagarjogadia28.core.util.UiText
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.launch
+
+class HeightViewModel(
+    private val preferences: UserInfoPreferences,
+    private val filterOutDigitsUseCase: FilterOutDigitsUseCase
+) : ViewModel() {
+    var height by mutableStateOf("180")
+        private set
+
+    private val _uiChannel = Channel<UiEvent>()
+    val uiChannel = _uiChannel.receiveAsFlow()
+
+    fun updateHeight(height: String) {
+        if (height.length <= 3)
+            this.height = filterOutDigitsUseCase(height)
+    }
+
+    fun saveHeight() {
+        viewModelScope.launch {
+            val heightNumber = height.toIntOrNull()
+            if (heightNumber == null || heightNumber == 0) {
+                _uiChannel.send(UiEvent.ShowSnackBar(UiText.StringResource(R.string.error_height_cant_be_empty)))
+                return@launch
+            }
+            preferences.saveHeight(heightNumber)
+            _uiChannel.send(UiEvent.Navigate(Route.Weight))
+        }
+    }
+}

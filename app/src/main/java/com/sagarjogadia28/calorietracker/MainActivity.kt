@@ -18,6 +18,8 @@ import com.sagarjogadia28.core.navigation.Route
 import com.sagarjogadia28.core_ui.ui.theme.CalorieTrackerTheme
 import com.sagarjogadia28.onboarding_presentation.age.AgeScreen
 import com.sagarjogadia28.onboarding_presentation.gender.GenderScreen
+import com.sagarjogadia28.onboarding_presentation.height.HeightScreen
+import com.sagarjogadia28.onboarding_presentation.weight.WeightScreen
 import com.sagarjogadia28.onboarding_presentation.welcome.WelcomeScreen
 
 class MainActivity : ComponentActivity() {
@@ -61,10 +63,20 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                         composable<Route.Height> {
-
+                            HeightScreen(
+                                snackBarHostState = snackBarHostState,
+                                onNavigate =  { event ->
+                                    navController.navigate(event.route)
+                                }
+                            )
                         }
                         composable<Route.Weight> {
-
+                            WeightScreen(
+                                snackBarHostState = snackBarHostState,
+                                onNavigate =  { event ->
+                                    navController.navigate(event.route)
+                                }
+                            )
                         }
                         composable<Route.NutrientGoal> {
 
