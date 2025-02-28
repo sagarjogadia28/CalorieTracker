@@ -16,8 +16,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sagarjogadia28.core.navigation.Route
 import com.sagarjogadia28.core_ui.ui.theme.CalorieTrackerTheme
+import com.sagarjogadia28.onboarding_presentation.activity.ActivityLevelScreen
 import com.sagarjogadia28.onboarding_presentation.age.AgeScreen
 import com.sagarjogadia28.onboarding_presentation.gender.GenderScreen
+import com.sagarjogadia28.onboarding_presentation.goal.GoalTypeScreen
 import com.sagarjogadia28.onboarding_presentation.height.HeightScreen
 import com.sagarjogadia28.onboarding_presentation.weight.WeightScreen
 import com.sagarjogadia28.onboarding_presentation.welcome.WelcomeScreen
@@ -82,10 +84,18 @@ class MainActivity : ComponentActivity() {
 
                         }
                         composable<Route.Activity> {
-
+                            ActivityLevelScreen(
+                                onNavigate = { event ->
+                                    navController.navigate(event.route)
+                                }
+                            )
                         }
                         composable<Route.Goal> {
-
+                            GoalTypeScreen(
+                                onNavigate = { event ->
+                                    navController.navigate(event.route)
+                                }
+                            )
                         }
                         composable<Route.TrackerOverview> {
 
