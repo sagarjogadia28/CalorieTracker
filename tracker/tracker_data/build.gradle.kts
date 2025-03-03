@@ -13,6 +13,11 @@ dependencies {
     implementation(project(Modules.core))
     implementation(project(Modules.trackerDomain))
 
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.navigation)
+    implementation(libs.koin.androidx.compose)
+
     implementation(libs.retrofit)
     implementation(libs.converter.moshi)
     implementation(libs.okhttp)
