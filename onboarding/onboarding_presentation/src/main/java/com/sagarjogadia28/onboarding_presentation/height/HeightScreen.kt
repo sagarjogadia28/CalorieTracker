@@ -47,7 +47,7 @@ fun HeightScreen(
         }
     }
 
-    HeightScreen(
+    HeightContent(
         height = viewModel.height,
         onHeightUpdated = viewModel::updateHeight,
         onClick = viewModel::saveHeight,
@@ -56,7 +56,7 @@ fun HeightScreen(
 }
 
 @Composable
-fun HeightScreen(
+fun HeightContent(
     height: String,
     onHeightUpdated: (String) -> Unit,
     onClick: () -> Unit,
@@ -95,7 +95,7 @@ fun HeightScreen(
 @Composable
 private fun HeightScreenPreview() {
     CalorieTrackerTheme {
-        HeightScreen(
+        HeightContent(
             height = "172",
             onHeightUpdated = {},
             onClick = {},

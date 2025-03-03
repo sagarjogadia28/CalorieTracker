@@ -46,7 +46,7 @@ fun WeightScreen(
         }
     }
 
-    WeightScreen(
+    WeightContent(
         weight = viewModel.weight,
         onWeightUpdated = viewModel::updateWeight,
         onClick = viewModel::saveWeight,
@@ -55,7 +55,7 @@ fun WeightScreen(
 }
 
 @Composable
-fun WeightScreen(
+fun WeightContent(
     weight: String,
     onWeightUpdated: (String) -> Unit,
     onClick: () -> Unit,
@@ -94,7 +94,7 @@ fun WeightScreen(
 @Composable
 private fun WeightScreenPreview() {
     CalorieTrackerTheme {
-        WeightScreen(
+        WeightContent(
             weight = "172",
             onWeightUpdated = {},
             onClick = {},

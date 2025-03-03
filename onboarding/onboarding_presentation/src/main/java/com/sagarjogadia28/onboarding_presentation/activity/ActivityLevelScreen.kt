@@ -46,7 +46,7 @@ fun ActivityLevelScreen(
         }
     }
 
-    ActivityLevelScreen(
+    ActivityLevelContent(
         selectedActivityLevel = viewModel.activityLevel,
         onActivityLevelSelected = viewModel::onActivityLevelSelected,
         onClick = viewModel::saveActivityLevel,
@@ -55,7 +55,7 @@ fun ActivityLevelScreen(
 }
 
 @Composable
-fun ActivityLevelScreen(
+fun ActivityLevelContent(
     selectedActivityLevel: ActivityLevel,
     onActivityLevelSelected: (ActivityLevel) -> Unit,
     onClick: () -> Unit,
@@ -111,7 +111,7 @@ fun ActivityLevelScreen(
 @Composable
 private fun ActivityLevelScreenPreview() {
     CalorieTrackerTheme {
-        ActivityLevelScreen(
+        ActivityLevelContent(
             selectedActivityLevel = ActivityLevel.LOW,
             onActivityLevelSelected = {},
             onClick = {},

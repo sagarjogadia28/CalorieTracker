@@ -1,5 +1,6 @@
-package com.sagarjogadia28.onboarding_presentation.age
+package com.sagarjogadia28.onboarding_presentation.nutrient_goal
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,29 +21,25 @@ import com.sagarjogadia28.core_ui.LocalSpacing
 import com.sagarjogadia28.core_ui.ui.theme.CalorieTrackerTheme
 import com.sagarjogadia28.onboarding_presentation.components.ActionButton
 import com.sagarjogadia28.onboarding_presentation.components.UnitTextField
-import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun AgeScreen(
+fun NutrientGoalScreen(
     snackBarHostState: SnackbarHostState,
     onNavigate: (UiEvent.Navigate) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: AgeViewModel = koinViewModel()
+    viewModel: NutrientGoalViewModel = koinViewModel()
 ) {
     val context = LocalContext.current
-
     LaunchedEffect(Unit) {
-        viewModel.uiChannel.collectLatest { event ->
+        viewModel.uiChannel.collect { event ->
             when (event) {
                 is UiEvent.Navigate -> {
                     onNavigate(event)
                 }
 
                 is UiEvent.ShowSnackBar -> {
-                    snackBarHostState.showSnackbar(
-                        message = event.message.asString(context)
-                    )
+                    snackBarHostState.showSnackbar(event.message.asString(context))
                 }
 
                 else -> {}
@@ -50,20 +47,21 @@ fun AgeScreen(
         }
     }
 
-    AgeContent(
-        age = viewModel.age,
-        onAgeUpdated = viewModel::onAgeUpdated,
-        onClick = viewModel::saveAge,
+    NutrientGoalContent(
+        carbs = viewModel.uiState.carbs,
+        protein = viewModel.uiState.protein,
+        fat = viewModel.uiState.fat,
+        event = viewModel::onEvent,
         modifier = modifier
     )
-
 }
 
 @Composable
-fun AgeContent(
-    age: String,
-    onAgeUpdated: (String) -> Unit,
-    onClick: () -> Unit,
+fun NutrientGoalContent(
+    carbs: String,
+    protein: String,
+    fat: String,
+    event: (NutrientGoalEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val spacing = LocalSpacing.current
@@ -74,21 +72,40 @@ fun AgeContent(
         contentAlignment = Alignment.Center
     ) {
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(spacing.spaceMedium)
         ) {
             Text(
-                text = stringResource(R.string.whats_your_age),
+                text = stringResource(R.string.what_are_your_nutrient_goals),
                 style = MaterialTheme.typography.displaySmall
             )
             UnitTextField(
-                value = age,
-                onValueChange = onAgeUpdated,
-                unit = stringResource(R.string.years)
+                value = carbs,
+                onValueChange = {
+                    event(NutrientGoalEvent.OnCarbRatioEnter(it))
+                },
+                unit = stringResource(R.string.carbs)
+            )
+            UnitTextField(
+                value = protein,
+                onValueChange = {
+                    event(NutrientGoalEvent.OnProteinRatioEnter(it))
+                },
+                unit = stringResource(R.string.protein)
+            )
+            UnitTextField(
+                value = fat,
+                onValueChange = {
+                    event(NutrientGoalEvent.OnFatRatioEnter(it))
+                },
+                unit = stringResource(R.string.fat)
             )
         }
         ActionButton(
             text = R.string.next,
-            onClick = onClick,
+            onClick = {
+                event(NutrientGoalEvent.OnNextClick)
+            },
             modifier = Modifier.align(Alignment.BottomEnd)
         )
     }
@@ -97,12 +114,13 @@ fun AgeContent(
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-private fun AgeScreenPreview() {
+private fun NutrientGoalScreenPreview() {
     CalorieTrackerTheme {
-        AgeContent(
-            age = "23",
-            onAgeUpdated = {},
-            onClick = {},
+        NutrientGoalContent(
+            carbs = "40",
+            protein = "30",
+            fat = "30",
+            event = {}
         )
     }
 }

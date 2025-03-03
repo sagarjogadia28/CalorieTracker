@@ -21,6 +21,7 @@ import com.sagarjogadia28.onboarding_presentation.age.AgeScreen
 import com.sagarjogadia28.onboarding_presentation.gender.GenderScreen
 import com.sagarjogadia28.onboarding_presentation.goal.GoalTypeScreen
 import com.sagarjogadia28.onboarding_presentation.height.HeightScreen
+import com.sagarjogadia28.onboarding_presentation.nutrient_goal.NutrientGoalScreen
 import com.sagarjogadia28.onboarding_presentation.weight.WeightScreen
 import com.sagarjogadia28.onboarding_presentation.welcome.WelcomeScreen
 
@@ -81,7 +82,12 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                         composable<Route.NutrientGoal> {
-
+                            NutrientGoalScreen(
+                                snackBarHostState = snackBarHostState,
+                                onNavigate = { event ->
+                                    navController.navigate(event.route)
+                                }
+                            )
                         }
                         composable<Route.Activity> {
                             ActivityLevelScreen(

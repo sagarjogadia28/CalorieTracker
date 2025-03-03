@@ -50,7 +50,7 @@ fun GoalTypeScreen(
         }
     }
 
-    GoalTypeScreen(
+    GoalTypeContent(
         selectedGoalType = viewModel.goalType,
         onGoalTypeSelected = viewModel::onGoalTypeSelected,
         onClick = viewModel::saveGoalType,
@@ -59,7 +59,7 @@ fun GoalTypeScreen(
 }
 
 @Composable
-fun GoalTypeScreen(
+fun GoalTypeContent(
     selectedGoalType: GoalType,
     onGoalTypeSelected: (GoalType) -> Unit,
     onClick: () -> Unit,
@@ -115,7 +115,7 @@ fun GoalTypeScreen(
 @Composable
 private fun GoalTypeScreenPreview() {
     CalorieTrackerTheme {
-        GoalTypeScreen(
+        GoalTypeContent(
             selectedGoalType = GoalType.LOSE,
             onGoalTypeSelected = {},
             onClick = {},
