@@ -11,4 +11,8 @@ android {
 
 dependencies {
     implementation(project(Modules.core))
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.navigation)
+    implementation(libs.koin.androidx.compose)
 }

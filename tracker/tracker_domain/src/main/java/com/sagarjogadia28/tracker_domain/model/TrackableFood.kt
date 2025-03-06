@@ -2,7 +2,7 @@ package com.sagarjogadia28.tracker_domain.model
 
 data class TrackableFood(
     val imageFrontThumbUrl: String?,
-    val productName: String?,
+    val productName: String,
     val carbohydrates100g: Int,
     val fat100g: Int,
     val proteins100g: Int,
