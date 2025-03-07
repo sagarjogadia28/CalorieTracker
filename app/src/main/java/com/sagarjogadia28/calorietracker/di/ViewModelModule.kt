@@ -10,6 +10,7 @@ import com.sagarjogadia28.onboarding_presentation.goal.GoalTypeViewModel
 import com.sagarjogadia28.onboarding_presentation.height.HeightViewModel
 import com.sagarjogadia28.onboarding_presentation.nutrient_goal.NutrientGoalViewModel
 import com.sagarjogadia28.onboarding_presentation.weight.WeightViewModel
+import com.sagarjogadia28.tracker_presentation.tracker_overview.TrackerOverviewViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -66,5 +67,9 @@ val viewModelModule = module {
             filterOutDigitsUseCase = get(),
             validateNutrientsUseCase = get()
         )
+    }
+
+    viewModel {
+        TrackerOverviewViewModel(get(), get())
     }
 }

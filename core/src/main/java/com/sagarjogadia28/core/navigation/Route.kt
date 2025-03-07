@@ -1,6 +1,7 @@
 package com.sagarjogadia28.core.navigation
 
 import kotlinx.serialization.Serializable
+import java.time.LocalDate
 
 @Serializable
 sealed class Route {
@@ -13,5 +14,11 @@ sealed class Route {
     @Serializable object Activity: Route()
     @Serializable object Goal: Route()
     @Serializable object TrackerOverview: Route()
-    @Serializable object Search: Route()
+    @Serializable
+    data class Search(
+        val mealType: String,
+        val dayOfMonth: Int,
+        val monthValue: Int,
+        val year: Int
+    ) : Route()
 }

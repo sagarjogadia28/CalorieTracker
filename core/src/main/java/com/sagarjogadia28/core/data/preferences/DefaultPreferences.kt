@@ -2,6 +2,7 @@ package com.sagarjogadia28.core.data.preferences
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
@@ -72,6 +73,18 @@ class DefaultPreferences(
         }
     }
 
+    override suspend fun saveShouldShowOnboarding(showOnboarding: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[KEY_SHOULD_SHOW_ONBOARDING] = showOnboarding
+        }
+    }
+
+    override fun loadShouldShowOnboarding(): Flow<Boolean> {
+        return dataStore.data.map { preferences ->
+            preferences[KEY_SHOULD_SHOW_ONBOARDING] ?: true
+        }
+    }
+
     override fun loadUserInfo(): Flow<UserInfo> {
         return dataStore.data.map { preferences ->
             UserInfo(
@@ -100,5 +113,6 @@ class DefaultPreferences(
         val KEY_CARB_RATIO = floatPreferencesKey("carb_ratio")
         val KEY_PROTEIN_RATIO = floatPreferencesKey("protein_ratio")
         val KEY_FAT_RATIO = floatPreferencesKey("fat_ratio")
+        val KEY_SHOULD_SHOW_ONBOARDING = booleanPreferencesKey("show_onboarding")
     }
 }

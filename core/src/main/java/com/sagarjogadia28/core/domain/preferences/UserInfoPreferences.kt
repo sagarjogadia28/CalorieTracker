@@ -16,6 +16,8 @@ interface UserInfoPreferences {
     suspend fun saveCarbRatio(ratio: Float)
     suspend fun saveProteinRatio(ratio: Float)
     suspend fun saveFatRatio(ratio: Float)
+    suspend fun saveShouldShowOnboarding(showOnboarding: Boolean)
 
     fun loadUserInfo(): Flow<UserInfo>
+    fun loadShouldShowOnboarding(): Flow<Boolean>
 }
