@@ -24,6 +24,7 @@ import com.sagarjogadia28.onboarding_presentation.height.HeightScreen
 import com.sagarjogadia28.onboarding_presentation.nutrient_goal.NutrientGoalScreen
 import com.sagarjogadia28.onboarding_presentation.weight.WeightScreen
 import com.sagarjogadia28.onboarding_presentation.welcome.WelcomeScreen
+import com.sagarjogadia28.tracker_presentation.tracker_overview.TrackerOverviewScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -104,7 +105,11 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                         composable<Route.TrackerOverview> {
-
+                            TrackerOverviewScreen(
+                                onNavigate = { event ->
+                                    navController.navigate(event.route)
+                                }
+                            )
                         }
                         composable<Route.Search> {
 
