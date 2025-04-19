@@ -9,12 +9,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import com.sagarjogadia28.core.R
 import com.sagarjogadia28.core.util.UiEvent
 import com.sagarjogadia28.core_ui.LocalSpacing
-import com.sagarjogadia28.core.R
 import com.sagarjogadia28.tracker_presentation.tracker_overview.components.AddButton
 import com.sagarjogadia28.tracker_presentation.tracker_overview.components.DaySelector
 import com.sagarjogadia28.tracker_presentation.tracker_overview.components.ExpandableMeal
@@ -30,6 +31,18 @@ fun TrackerOverviewScreen(
     val spacing = LocalSpacing.current
     val state = viewModel.uiState
     val context = LocalContext.current
+
+    LaunchedEffect(Unit) {
+        viewModel.uiChannel.collect { event ->
+            when (event) {
+                is UiEvent.Navigate -> {
+                    onNavigate(event)
+                }
+
+                else -> Unit
+            }
+        }
+    }
 
     LazyColumn(
         modifier = Modifier

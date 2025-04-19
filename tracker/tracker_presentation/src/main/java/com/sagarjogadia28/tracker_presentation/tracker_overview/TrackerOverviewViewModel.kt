@@ -42,7 +42,7 @@ class TrackerOverviewViewModel(
                     _uiChannel.send(
                         UiEvent.Navigate(
                             route = Route.Search(
-                                mealType = event.meal.mealType.name,
+                                mealName = event.meal.mealType.name,
                                 dayOfMonth = uiState.date.dayOfMonth,
                                 monthValue = uiState.date.monthValue,
                                 year = uiState.date.year

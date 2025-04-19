@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.sagarjogadia28.core.navigation.Route
 import com.sagarjogadia28.core_ui.ui.theme.CalorieTrackerTheme
 import com.sagarjogadia28.onboarding_presentation.activity.ActivityLevelScreen
@@ -24,6 +25,7 @@ import com.sagarjogadia28.onboarding_presentation.height.HeightScreen
 import com.sagarjogadia28.onboarding_presentation.nutrient_goal.NutrientGoalScreen
 import com.sagarjogadia28.onboarding_presentation.weight.WeightScreen
 import com.sagarjogadia28.onboarding_presentation.welcome.WelcomeScreen
+import com.sagarjogadia28.tracker_presentation.search.SearchScreen
 import com.sagarjogadia28.tracker_presentation.tracker_overview.TrackerOverviewScreen
 
 class MainActivity : ComponentActivity() {
@@ -111,8 +113,16 @@ class MainActivity : ComponentActivity() {
                                 }
                             )
                         }
-                        composable<Route.Search> {
-
+                        composable<Route.Search> { backStackEntry ->
+                            val search = backStackEntry.toRoute<Route.Search>()
+                            SearchScreen(
+                                snackBarHostState = snackBarHostState,
+                                mealName = search.mealName,
+                                dayOfMonth = search.dayOfMonth,
+                                month = search.monthValue,
+                                year = search.year,
+                                onNavigateUp = { navController.navigateUp() }
+                            )
                         }
                     }
                 }
