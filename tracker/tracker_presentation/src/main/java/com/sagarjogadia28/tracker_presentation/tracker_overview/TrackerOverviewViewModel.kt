@@ -22,6 +22,7 @@ class TrackerOverviewViewModel(
 ) : ViewModel() {
 
     init {
+        refreshFoods()
         viewModelScope.launch {
             preferences.saveShouldShowOnboarding(false)
         }
