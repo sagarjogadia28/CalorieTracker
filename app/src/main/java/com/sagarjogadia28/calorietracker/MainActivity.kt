@@ -9,12 +9,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import com.sagarjogadia28.core.domain.preferences.UserInfoPreferences
 import com.sagarjogadia28.core.navigation.Route
 import com.sagarjogadia28.core_ui.ui.theme.CalorieTrackerTheme
 import com.sagarjogadia28.onboarding_presentation.activity.ActivityLevelScreen
@@ -27,8 +30,12 @@ import com.sagarjogadia28.onboarding_presentation.weight.WeightScreen
 import com.sagarjogadia28.onboarding_presentation.welcome.WelcomeScreen
 import com.sagarjogadia28.tracker_presentation.search.SearchScreen
 import com.sagarjogadia28.tracker_presentation.tracker_overview.TrackerOverviewScreen
+import org.koin.android.ext.android.inject
 
 class MainActivity : ComponentActivity() {
+
+    private val preferences: UserInfoPreferences by inject()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -37,13 +44,16 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 val snackBarHostState = remember { SnackbarHostState() }
 
+                val shouldShowOnboarding by preferences.loadShouldShowOnboarding()
+                    .collectAsState(false)
+
                 Scaffold(
                     snackbarHost = { SnackbarHost(snackBarHostState) },
                     modifier = Modifier.fillMaxSize()
                 ) { innerPadding ->
                     NavHost(
                         navController = navController,
-                        startDestination = Route.Welcome,
+                        startDestination = if (shouldShowOnboarding) Route.Welcome else Route.TrackerOverview,
                         modifier = Modifier.padding(innerPadding)
                     ) {
                         composable<Route.Welcome> {
@@ -71,7 +81,7 @@ class MainActivity : ComponentActivity() {
                         composable<Route.Height> {
                             HeightScreen(
                                 snackBarHostState = snackBarHostState,
-                                onNavigate =  { event ->
+                                onNavigate = { event ->
                                     navController.navigate(event.route)
                                 }
                             )
@@ -79,7 +89,7 @@ class MainActivity : ComponentActivity() {
                         composable<Route.Weight> {
                             WeightScreen(
                                 snackBarHostState = snackBarHostState,
-                                onNavigate =  { event ->
+                                onNavigate = { event ->
                                     navController.navigate(event.route)
                                 }
                             )

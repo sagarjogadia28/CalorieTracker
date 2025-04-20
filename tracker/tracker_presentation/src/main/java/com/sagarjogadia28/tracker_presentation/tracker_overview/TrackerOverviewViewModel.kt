@@ -22,7 +22,6 @@ class TrackerOverviewViewModel(
 ) : ViewModel() {
 
     init {
-        refreshFoods()
         viewModelScope.launch {
             preferences.saveShouldShowOnboarding(false)
         }
@@ -86,7 +85,7 @@ class TrackerOverviewViewModel(
         }
     }
 
-    private fun refreshFoods() {
+    fun refreshFoods() {
         getFoodsForDateJob?.cancel()
         getFoodsForDateJob = trackerUseCases
             .getFoodsForDateUseCase(uiState.date)

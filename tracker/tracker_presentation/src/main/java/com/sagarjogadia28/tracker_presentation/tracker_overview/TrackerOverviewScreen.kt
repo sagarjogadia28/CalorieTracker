@@ -33,6 +33,7 @@ fun TrackerOverviewScreen(
     val context = LocalContext.current
 
     LaunchedEffect(Unit) {
+        viewModel.refreshFoods()
         viewModel.uiChannel.collect { event ->
             when (event) {
                 is UiEvent.Navigate -> {
