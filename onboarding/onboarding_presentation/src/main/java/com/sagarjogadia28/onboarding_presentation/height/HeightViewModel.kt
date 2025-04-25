@@ -38,7 +38,7 @@ class HeightViewModel(
                 return@launch
             }
             preferences.saveHeight(heightNumber)
-            _uiChannel.send(UiEvent.Navigate(Route.Weight))
+            _uiChannel.send(UiEvent.Navigate)
         }
     }
 }

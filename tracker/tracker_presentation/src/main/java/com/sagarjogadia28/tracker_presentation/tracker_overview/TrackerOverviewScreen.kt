@@ -25,7 +25,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun TrackerOverviewScreen(
-    onNavigate: (UiEvent.Navigate) -> Unit,
+    onNavigate: (String, Int, Int, Int) -> Unit,
     viewModel: TrackerOverviewViewModel = koinViewModel()
 ) {
     val spacing = LocalSpacing.current
@@ -34,15 +34,6 @@ fun TrackerOverviewScreen(
 
     LaunchedEffect(Unit) {
         viewModel.refreshFoods()
-        viewModel.uiChannel.collect { event ->
-            when (event) {
-                is UiEvent.Navigate -> {
-                    onNavigate(event)
-                }
-
-                else -> Unit
-            }
-        }
     }
 
     LazyColumn(
@@ -77,7 +68,9 @@ fun TrackerOverviewScreen(
                             .fillMaxWidth()
                             .padding(horizontal = spacing.spaceSmall)
                     ) {
-                        state.trackedFoods.forEach { food ->
+
+                        val mealTrackedFoods = state.trackedFoods.filter { it.type == meal.mealType }
+                        mealTrackedFoods.forEach { food ->
                             TrackedFoodItem(
                                 trackedFood = food,
                                 onDeleteClick = {
@@ -94,8 +87,11 @@ fun TrackerOverviewScreen(
                                 meal.name.asString(context)
                             ),
                             onClick = {
-                                viewModel.onEvent(
-                                    TrackerOverviewEvent.OnAddMealClick(meal)
+                                onNavigate(
+                                    meal.name.asString(context),
+                                    state.date.dayOfMonth,
+                                    state.date.monthValue,
+                                    state.date.year,
                                 )
                             },
                             modifier = Modifier.fillMaxWidth()

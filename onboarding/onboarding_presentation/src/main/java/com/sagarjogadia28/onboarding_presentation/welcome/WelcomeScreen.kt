@@ -23,7 +23,7 @@ import com.sagarjogadia28.onboarding_presentation.components.ActionButton
 
 @Composable
 fun WelcomeScreen(
-    onNavigate: (UiEvent.Navigate) -> Unit,
+    onNextClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val spacing = LocalSpacing.current
@@ -42,9 +42,7 @@ fun WelcomeScreen(
         Spacer(modifier = Modifier.height(spacing.spaceMedium))
         ActionButton(
             text = R.string.next,
-            onClick = {
-                onNavigate(UiEvent.Navigate(Route.Gender))
-            }
+            onClick = onNextClick
         )
     }
 }
@@ -54,7 +52,7 @@ fun WelcomeScreen(
 private fun WelcomeScreenPreview() {
     CalorieTrackerTheme {
         WelcomeScreen(
-            onNavigate = {}
+            onNextClick = {}
         )
     }
 }

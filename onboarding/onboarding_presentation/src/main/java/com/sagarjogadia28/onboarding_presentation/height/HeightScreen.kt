@@ -18,7 +18,6 @@ import com.sagarjogadia28.core.R
 import com.sagarjogadia28.core.util.UiEvent
 import com.sagarjogadia28.core_ui.LocalSpacing
 import com.sagarjogadia28.core_ui.ui.theme.CalorieTrackerTheme
-import com.sagarjogadia28.onboarding_presentation.age.AgeScreen
 import com.sagarjogadia28.onboarding_presentation.components.ActionButton
 import com.sagarjogadia28.onboarding_presentation.components.UnitTextField
 import org.koin.androidx.compose.koinViewModel
@@ -26,7 +25,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun HeightScreen(
     snackBarHostState: SnackbarHostState,
-    onNavigate: (UiEvent.Navigate) -> Unit,
+    onNextClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HeightViewModel = koinViewModel()
 ) {
@@ -35,7 +34,7 @@ fun HeightScreen(
         viewModel.uiChannel.collect { event ->
             when (event) {
                 is UiEvent.Navigate -> {
-                    onNavigate(event)
+                    onNextClick()
                 }
 
                 is UiEvent.ShowSnackBar -> {

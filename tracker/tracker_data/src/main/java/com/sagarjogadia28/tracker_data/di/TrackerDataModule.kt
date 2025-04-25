@@ -6,6 +6,8 @@ import com.sagarjogadia28.tracker_data.local.TrackerDatabase
 import com.sagarjogadia28.tracker_data.remote.OpenFoodApi
 import com.sagarjogadia28.tracker_data.repository.TrackerRepositoryImpl
 import com.sagarjogadia28.tracker_domain.repository.TrackerRepository
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
@@ -22,7 +24,13 @@ val trackerDataModule = module {
     }
 
     single {
-        Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(MoshiConverterFactory.create())
+        Moshi.Builder()
+            .add(KotlinJsonAdapterFactory())
+            .build()
+    }
+
+    single {
+        Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(MoshiConverterFactory.create(get()))
             .client(get()).build().create(OpenFoodApi::class.java)
     }
 

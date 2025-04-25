@@ -30,7 +30,7 @@ class GenderViewModel(
     fun saveGender() {
         viewModelScope.launch {
             preferences.saveGender(gender)
-            _uiChannel.send(UiEvent.Navigate(Route.Age))
+            _uiChannel.send(UiEvent.Navigate)
         }
     }
 }

@@ -67,7 +67,7 @@ class NutrientGoalViewModel(
                             preferences.saveCarbRatio(result.carbsRatio)
                             preferences.saveProteinRatio(result.proteinRatio)
                             preferences.saveFatRatio(result.fatRatio)
-                            _uiChannel.send(UiEvent.Navigate(Route.TrackerOverview))
+                            _uiChannel.send(UiEvent.Navigate)
                         }
                     }
                 }

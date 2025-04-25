@@ -1,7 +1,5 @@
 package com.sagarjogadia28.onboarding_presentation.goal
 
-import com.sagarjogadia28.onboarding_presentation.activity.ActivityLevelViewModel
-
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,12 +19,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.sagarjogadia28.core.R
-import com.sagarjogadia28.core.domain.model.ActivityLevel
 import com.sagarjogadia28.core.domain.model.GoalType
 import com.sagarjogadia28.core.util.UiEvent
 import com.sagarjogadia28.core_ui.LocalSpacing
 import com.sagarjogadia28.core_ui.ui.theme.CalorieTrackerTheme
-import com.sagarjogadia28.onboarding_presentation.activity.ActivityLevelScreen
 import com.sagarjogadia28.onboarding_presentation.components.ActionButton
 import com.sagarjogadia28.onboarding_presentation.components.SelectableButton
 import kotlinx.coroutines.flow.collectLatest
@@ -34,7 +30,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun GoalTypeScreen(
-    onNavigate: (UiEvent.Navigate) -> Unit,
+    onNextClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: GoalTypeViewModel = koinViewModel()
 ) {
@@ -42,7 +38,7 @@ fun GoalTypeScreen(
         viewModel.uiChannel.collectLatest { event ->
             when (event) {
                 is UiEvent.Navigate -> {
-                    onNavigate(event)
+                    onNextClick()
                 }
 
                 else -> Unit

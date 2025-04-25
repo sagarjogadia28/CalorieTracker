@@ -30,7 +30,7 @@ class GoalTypeViewModel(
     fun saveGoalType() {
         viewModelScope.launch {
             preferences.saveGoalType(goalType)
-            _uiChannel.send(UiEvent.Navigate(Route.NutrientGoal))
+            _uiChannel.send(UiEvent.Navigate)
         }
     }
 }

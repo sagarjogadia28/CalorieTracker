@@ -39,7 +39,7 @@ class AgeViewModel(
                 return@launch
             }
             preferences.saveAge(age.toInt())
-            _uiChannel.send(UiEvent.Navigate(Route.Height))
+            _uiChannel.send(UiEvent.Navigate)
         }
     }
 }

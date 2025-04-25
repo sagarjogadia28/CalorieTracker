@@ -37,21 +37,6 @@ class TrackerOverviewViewModel(
 
     fun onEvent(event: TrackerOverviewEvent) {
         when (event) {
-            is TrackerOverviewEvent.OnAddMealClick -> {
-                viewModelScope.launch {
-                    _uiChannel.send(
-                        UiEvent.Navigate(
-                            route = Route.Search(
-                                mealName = event.meal.mealType.name,
-                                dayOfMonth = uiState.date.dayOfMonth,
-                                monthValue = uiState.date.monthValue,
-                                year = uiState.date.year
-                            )
-                        )
-                    )
-                }
-            }
-
             is TrackerOverviewEvent.OnDeleteTrackedFoodClick -> {
                 viewModelScope.launch {
                     trackerUseCases.deleteTrackedFoodUseCase(event.trackedFood)

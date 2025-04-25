@@ -25,7 +25,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun WeightScreen(
     snackBarHostState: SnackbarHostState,
-    onNavigate: (UiEvent.Navigate) -> Unit,
+    onNextClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: WeightViewModel = koinViewModel()
 ) {
@@ -34,7 +34,7 @@ fun WeightScreen(
         viewModel.uiChannel.collect { event ->
             when (event) {
                 is UiEvent.Navigate -> {
-                    onNavigate(event)
+                    onNextClick()
                 }
 
                 is UiEvent.ShowSnackBar -> {

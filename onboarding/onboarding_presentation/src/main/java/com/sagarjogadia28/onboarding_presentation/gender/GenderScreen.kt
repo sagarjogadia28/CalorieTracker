@@ -30,7 +30,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun GenderScreen(
-    onNavigate: (UiEvent.Navigate) -> Unit,
+    onNextClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: GenderViewModel = koinViewModel()
 ) {
@@ -38,7 +38,7 @@ fun GenderScreen(
         viewModel.uiChannel.collectLatest { event ->
             when (event) {
                 is UiEvent.Navigate -> {
-                    onNavigate(event)
+                    onNextClick()
                 }
 
                 else -> Unit

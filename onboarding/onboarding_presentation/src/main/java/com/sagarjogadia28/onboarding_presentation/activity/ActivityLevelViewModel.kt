@@ -30,7 +30,7 @@ class ActivityLevelViewModel(
     fun saveActivityLevel() {
         viewModelScope.launch {
             preferences.saveActivityLevel(activityLevel)
-            _uiChannel.send(UiEvent.Navigate(Route.Goal))
+            _uiChannel.send(UiEvent.Navigate)
         }
     }
 }

@@ -26,7 +26,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun NutrientGoalScreen(
     snackBarHostState: SnackbarHostState,
-    onNavigate: (UiEvent.Navigate) -> Unit,
+    onNextClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: NutrientGoalViewModel = koinViewModel()
 ) {
@@ -35,7 +35,7 @@ fun NutrientGoalScreen(
         viewModel.uiChannel.collect { event ->
             when (event) {
                 is UiEvent.Navigate -> {
-                    onNavigate(event)
+                    onNextClick()
                 }
 
                 is UiEvent.ShowSnackBar -> {

@@ -23,6 +23,10 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
 
+    implementation(libs.moshi)
+    implementation(libs.moshi.kotlin)
+    "kapt"(libs.moshi.kotlin.codegen)
+
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
     "kapt"(libs.room.compiler)

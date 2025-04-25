@@ -30,7 +30,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ActivityLevelScreen(
-    onNavigate: (UiEvent.Navigate) -> Unit,
+    onNextClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ActivityLevelViewModel = koinViewModel()
 ) {
@@ -38,7 +38,7 @@ fun ActivityLevelScreen(
         viewModel.uiChannel.collectLatest { event ->
             when (event) {
                 is UiEvent.Navigate -> {
-                    onNavigate(event)
+                    onNextClick()
                 }
 
                 else -> Unit

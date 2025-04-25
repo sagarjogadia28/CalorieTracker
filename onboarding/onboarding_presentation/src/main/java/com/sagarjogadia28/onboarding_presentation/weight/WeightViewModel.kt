@@ -38,7 +38,7 @@ class WeightViewModel(
                 return@launch
             }
             preferences.saveWeight(weightNumber)
-            _uiChannel.send(UiEvent.Navigate(Route.Activity))
+            _uiChannel.send(UiEvent.Navigate)
         }
     }
 }
